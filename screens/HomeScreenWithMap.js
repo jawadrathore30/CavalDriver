@@ -47,7 +47,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { distributeRideRequest, updateDriverStats, Driver } from '../utils/rideDistribution';
-import { GOOGLE_MAPS_APIKEY } from "@env";
+// import { GOOGLE_MAPS_API_KEY } from "@env";
+// import { CONFIG } from '../utils/config';
+import { CONFIG, debugConfig } from '../utils/config';
 import CavalLogo from "../assets/Caval_courrier_logo-removebg-preview.png";
 import { useTheme } from "../context/ThemeContext";
 
@@ -132,6 +134,21 @@ const HomeScreenWithMap = () => {
   const [rideCooldown, setRideCooldown] = useState(false);
   const [showStatusPopup, setShowStatusPopup] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
+  // In HomeScreenWithMap.js
+const mapApiKey = CONFIG.GOOGLE_MAPS_API_KEY;
+
+//   if (!GOOGLE_MAPS_API_KEY) {
+//   console.error("Google Maps API key is missing!");
+//   Alert.alert(
+//     "Configuration Error",
+//     "The app is missing required configuration. Please contact support.",
+//     [{ text: "OK" }]
+//   );
+//   return null;
+// }
+
+// Then use mapApiKey in your MapView configuration
 
   // -----------------------------------------------------------------
   // 2. Effects
@@ -1320,7 +1337,8 @@ const HomeScreenWithMap = () => {
   }
 
   console.log('Rendering map with region:', region);
-  console.log('Google Maps API Key:', GOOGLE_MAPS_APIKEY);
+  // console.log('Google Maps API Key:', GOOGLE_MAPS_API_KEY);
+  console.log('Google Maps API Key available:', !!CONFIG.GOOGLE_MAPS_API_KEY);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>

@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { GOOGLE_MAPS_APIKEY } from '@env';
+import { GOOGLE_MAPS_API_KEY } from '@env';
 
 export const MAP_INITIAL_CONFIG = {
   latitude: -18.8792,  // Default to Antananarivo
@@ -11,7 +11,7 @@ export const MAP_INITIAL_CONFIG = {
 export const getMapConfig = () => {
   if (Platform.OS === 'android') {
     return {
-      apiKey: GOOGLE_MAPS_APIKEY,
+      apiKey: GOOGLE_MAPS_API_KEY,
       libraries: ['places'],
     };
   }

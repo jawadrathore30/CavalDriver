@@ -10,7 +10,8 @@ import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { GOOGLE_MAPS_APIKEY } from "@env";
+import { GOOGLE_MAPS_API_KEY } from "@env";
+import { CONFIG } from "../utils/config"
 import { APP_CONFIG } from "../constants/appConfig";
 
 const RideOptionsScreen = () => {
@@ -44,6 +45,12 @@ const RideOptionsScreen = () => {
 
   // Track which ride option is selected
   const [selectedRide, setSelectedRide] = useState(null);
+    React.useEffect(() => {
+    if (!CONFIG.GOOGLE_MAPS_API_KEY) {
+      console.error("Google Maps API key not found in RideOptionsScreen")
+      alert("Configuration error: Google Maps API key is missing")
+    }
+  }, [])
 
   // Helper to format arrival times (e.g. "3:15 PM")
   const getFormattedArrivalTime = (extraMinutes) => {
@@ -103,11 +110,11 @@ const RideOptionsScreen = () => {
         )}
 
         {/* Draw route if both origin & destination */}
-        {origin && destination && (
+        {origin && destination && CONFIG.GOOGLE_MAPS_API_KEY &&(
           <MapViewDirections
             origin={origin}
             destination={destination}
-            apikey={GOOGLE_MAPS_APIKEY}
+            apikey={CONFIG.GOOGLE_MAPS_API_KEY}
             strokeWidth={4}
             strokeColor="#FF6F00"
             onReady={(result) => {
